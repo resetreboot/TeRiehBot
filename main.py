@@ -81,6 +81,7 @@ def main():
 
     # Start the chat bot system
     chatbot = ChatBot('Te Rieh',
+                      trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
                       storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
                       logic_adapters=[
                           'chatterbot.logic.BestMatch'
