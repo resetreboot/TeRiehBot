@@ -47,7 +47,7 @@ def randomchat(bot, update):
     reply = chatbot.get_response(msg)
 
     if "te rieh" in msg or random.randint(0, 100) < 5:
-        reply = user_name + ": " + reply
+        reply = user_name + ": " + reply.text
         bot.sendMessage(update.message.chat_id, text=reply)
 
 
