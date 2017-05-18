@@ -10,6 +10,7 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler,
                           Filters)
 
 from config import config
+from simphaty import analyze
 
 from chatterbot import ChatBot
 
@@ -47,7 +48,11 @@ def randomchat(bot, update):
     if not user_name or user_name == '':
         user_name = 'humano'
 
-    reply = chatbot.get_response(msg)
+    if random.randint(0, 100) <= 25:
+        reply = analyze(msg)
+
+    else:
+        reply = chatbot.get_response(msg)
 
     if "te rieh" in msg or random.randint(0, 100) < 5:
         if "te rieh" in reply.text:
