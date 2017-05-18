@@ -44,10 +44,19 @@ def randomchat(bot, update):
     global chatbot
     msg = update.message.text.lower()
     user_name = update.message.from_user.username.lower()
+    if not user_name or user_name == '':
+        user_name = 'humano'
+
     reply = chatbot.get_response(msg)
 
     if "te rieh" in msg or random.randint(0, 100) < 5:
-        reply = user_name + ": " + reply.text
+        if "te rieh" in reply.text:
+            reply = reply.text
+            reply = reply.replace("te rieh", user_name)
+
+        else:
+            reply = user_name + ": " + reply.text
+
         bot.sendMessage(update.message.chat_id, text=reply)
 
 
