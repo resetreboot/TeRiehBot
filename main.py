@@ -56,7 +56,7 @@ def randomchat(bot, update):
         reply = statement.text
 
     if "te rieh" in msg or random.randint(0, 100) < 5:
-        if "te rieh" in reply.text:
+        if "te rieh" in reply:
             reply = reply.replace("te rieh", user_name)
 
         else:
