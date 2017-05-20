@@ -13,6 +13,7 @@ from config import config
 from simphaty import analyze
 
 from chatterbot import ChatBot
+from chatterbot.trainers import ListTrainer, ChatterBotCorpusTrainer
 
 
 # Enable logging
@@ -75,10 +76,12 @@ def randomchat(bot, update):
             chat_history[update.message.chat_id] = msg
 
         else:
+            chatbot.set_trainer(ListTrainer)
             chatbot.train([prev, msg])
 
 
 def initial_training(bot, update):
+    chatbot.set_trainer(ChatterBotCorpusTrainer)
     chatbot.train("chatterbot.corpus.spanish")
 
     bot.sendMessage(update.message.chat_id, text="Entrenamiento inicial completado.")
