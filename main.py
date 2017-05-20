@@ -24,6 +24,8 @@ logger = logging.getLogger(__name__)
 
 chatbot = None
 
+chat_history = {}
+
 
 # Define a few command handlers. These usually take the two arguments bot and
 # update. Error handlers also receive the raised TelegramError object in error.
@@ -48,21 +50,32 @@ def randomchat(bot, update):
     if not user_name or user_name == '':
         user_name = 'humano'
 
-    if random.randint(0, 100) <= 25:
-        reply = analyze(msg)
-
-    else:
-        statement = chatbot.get_response(msg)
-        reply = statement.text
-
-    if "te rieh" in msg or random.randint(0, 100) < 5:
-        if "te rieh" in reply:
-            reply = reply.replace("te rieh", user_name)
+    if "te rieh" in msg:
+        # Si hablan al bot, charla
+        if random.randint(0, 100) <= 25:
+            reply = analyze(msg)
 
         else:
-            reply = user_name + ": " + reply
+            statement = chatbot.get_response(msg)
+            reply = statement.text
 
-        bot.sendMessage(update.message.chat_id, text=reply)
+            if "te rieh" in reply:
+                reply = reply.replace("te rieh", user_name)
+
+            else:
+                reply = user_name + ": " + reply
+
+            bot.sendMessage(update.message.chat_id, text=reply)
+
+    else:
+        # Si no, aprende, en silencio
+        prev = chat_history.get(update.message.chat_id)
+
+        if not prev:
+            chat_history[update.message.chat_id] = msg
+
+        else:
+            chatbot.train([prev, msg])
 
 
 def initial_training(bot, update):
