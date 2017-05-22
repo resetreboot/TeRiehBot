@@ -66,7 +66,7 @@ def randomchat(bot, update):
             else:
                 reply = user_name + ": " + reply
 
-            bot.sendMessage(update.message.chat_id, text=reply)
+        bot.sendMessage(update.message.chat_id, text=reply)
 
     else:
         # Si no, aprende, en silencio
